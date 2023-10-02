@@ -4,7 +4,13 @@
  */
 package prolog_map;
 
+import java.awt.List;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import org.jpl7.Query;
 import org.jpl7.Term;
 
@@ -19,6 +25,8 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        fillList();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -72,13 +80,13 @@ public class Menu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(157, 157, 157)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(171, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -104,8 +112,24 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Map frame = new Map();
-        frame.setVisible(true);
+        
+         // Obtener las selecciones actuales de ambos JComboBox
+        String seleccion1 = (String) jComboBox1.getSelectedItem();
+        String seleccion2 = (String) jComboBox2.getSelectedItem();
+        
+        System.err.println("Seleccion 01: "+ seleccion1);
+        System.err.println("Seleccion 02: "+ seleccion2 );
+
+        // Verificar si las selecciones son iguales y tomar medidas
+        if (seleccion1 != null && seleccion2 != null && seleccion1.equals(seleccion2)) {
+            JOptionPane.showMessageDialog(null, "Las selecciones no pueden ser iguales", "Error", JOptionPane.ERROR_MESSAGE);
+            // Puedes realizar alguna acción adicional aquí, como restablecer una de las selecciones.
+        }
+        else if (!seleccion1.equals(seleccion2)){
+            Map frame = new Map();
+            frame.setVisible(true); 
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -116,9 +140,43 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ComponentAdded
 
-    /**
-     * @param args the command line arguments
-     */
+    
+    
+    public void fillList() {
+        String t1 = "consult('prolog-java.pl')";
+        Query q1 = new Query(t1);
+        
+        
+        if(!q1.hasSolution()){
+            System.out.println("Error: Base de conocimiento no conectada");
+        }else{
+            System.out.println("Base de conocimiento conectada");
+            System.out.println("Consultando...");
+            
+            String t4 = "prueba(W)";
+            Query q4 = new Query(t4);
+            java.util.List<String> resultados = new ArrayList<>();
+            
+            System.out.println("Soluciones para  "  + t4 + ":");
+            while(q4.hasMoreSolutions()){
+                java.util.Map<String, Term> ht4 = q4.nextSolution();
+                String wValue = ht4.get("W").toString();
+                resultados.add(wValue);
+            }
+            
+            for(String x: resultados){
+                System.err.println(x);
+            }
+            
+            DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(resultados.toArray(new String[0]));
+            DefaultComboBoxModel<String> modelo2 = new DefaultComboBoxModel<>(resultados.toArray(new String[0]));
+            jComboBox1.setModel(modelo);
+            jComboBox2.setModel(modelo2);
+           
+           
+        }
+    }    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -142,28 +200,7 @@ public class Menu extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        String t1 = "consult('prolog-java.pl')";
-        Query q1 = new Query(t1);
-
-        if(!q1.hasSolution()){
-            System.out.println("Error: Base de conocimiento no conectada");
-        }else{
-            System.out.println("Base de conocimiento conectada");
-            System.out.println("Consultando...");
-            
-            String t4 = "prueba(W)";
-            Query q4 = new Query(t4);
-            java.util.List<String> resultados = new ArrayList<>();
-            
-            System.out.println("Soluciones para  "  + t4 + ":");
-            while(q4.hasMoreSolutions()){
-                java.util.Map<String, Term> ht4 = q4.nextSolution();
-                System.out.println("W = " + ht4.get("W"));
-                String wValue = ht4.get("W").toString();
-                resultados.add(wValue);
-            }
-        }
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -171,6 +208,9 @@ public class Menu extends javax.swing.JFrame {
             }
         });
     }
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -126,7 +126,8 @@ public class Menu extends javax.swing.JFrame {
             // Puedes realizar alguna acción adicional aquí, como restablecer una de las selecciones.
         }
         else if (!seleccion1.equals(seleccion2)){
-            Map frame = new Map();
+            
+            Map frame = new Map(seleccion1,seleccion2);
             frame.setVisible(true); 
         }
         

@@ -13,6 +13,16 @@ import javax.swing.*;
  * @author karli
  */
 public class Map extends javax.swing.JFrame {
+    
+    private String Inicio;
+    private String Fin;
+
+    public Map(String Inicio, String Fin) {
+        this.Inicio = Inicio;
+        this.Fin = Fin;
+    }
+   
+    
 
     /**
      * Creates new form Map
@@ -21,6 +31,7 @@ public class Map extends javax.swing.JFrame {
         initComponents();
         setResizable(false);
         setSize(1366, 768);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     
         @Override
@@ -37,12 +48,19 @@ public class Map extends javax.swing.JFrame {
         
         List<Coordenadas> lista = new ArrayList<>();
         
-        lista.add(new Coordenadas(210,227));
-        lista.add(new Coordenadas(431,236));
-        lista.add(new Coordenadas(426,344));
-        lista.add(new Coordenadas(548,350));
+        lista.add(new Coordenadas(313,286));
+        lista.add(new Coordenadas(547,297));
+        lista.add(new Coordenadas(640,296));
+        lista.add(new Coordenadas(640,325));
+        
+        
         
         for (int i = 0; i < lista.size(); i++) {
+            
+            if(i == 0){
+                g2d.fillOval(lista.get(i).getX() - 5,lista.get(i).getY() - 5, 15, 15);
+            }
+            
             if(i != lista.size() - 1){
                 
                 g2d.drawLine(lista.get(i).getX(),lista.get(i).getY() , 

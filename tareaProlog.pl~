@@ -25,6 +25,7 @@ lugar(plaza_las_ramblas).
 
 %Calles de lugares
 %
+<<<<<<< HEAD
 lugar(ccCarretera_panamericana).
 lugar(ccCarrerera_panamericana_central).
 
@@ -77,5 +78,7 @@ ir_hacia_rec(X,Y):-
 
 
 
+=======
+>>>>>>> dfb5a1f95f3135b290560c787714b56305398dd6
 
 

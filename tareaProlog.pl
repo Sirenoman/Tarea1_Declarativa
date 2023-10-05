@@ -72,10 +72,3 @@ ir_hacia_rec(X,Y):-
     ir_hacia_rec(Z,Y),
     writeln(Z),
     !.
-
-
-
-
-
-
-

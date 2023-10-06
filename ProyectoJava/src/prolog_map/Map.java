@@ -7,6 +7,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+import org.jpl7.Query;
+import org.jpl7.Term;
 
 /**
  *
@@ -14,20 +16,22 @@ import javax.swing.*;
  */
 public class Map extends javax.swing.JFrame {
     
-    private String Inicio;
-    private String Fin;
-
+    private String Inicio = "";
+    private String Fin = "";
+    private List<Coordenadas> lista = new ArrayList<>();
+       
+    /**
+     * Creates new form Map
+     * @param Inicio
+     * @param Fin
+     */
+    
+    public Map(){
+    }
+    
     public Map(String Inicio, String Fin) {
         this.Inicio = Inicio;
         this.Fin = Fin;
-    }
-   
-    
-
-    /**
-     * Creates new form Map
-     */
-    public Map() {
         initComponents();
         setResizable(false);
         setSize(1366, 768);
@@ -36,6 +40,10 @@ public class Map extends javax.swing.JFrame {
     
         @Override
     public void paint(Graphics g){
+        
+        consult();
+        
+        
         Graphics2D g2d = (Graphics2D) g;
         Image fondo = new ImageIcon(getClass().getResource("/image/Mapa_SantaTecla3.png")).getImage();
         
@@ -46,7 +54,6 @@ public class Map extends javax.swing.JFrame {
         g2d.setStroke(grosorLinea);
         g2d.setColor(Color.BLUE);
         
-        List<Coordenadas> lista = new ArrayList<>();
         
         lista.add(new Coordenadas(313,286));
         lista.add(new Coordenadas(547,297));
@@ -67,6 +74,48 @@ public class Map extends javax.swing.JFrame {
                              lista.get(   i+1).getX(),lista.get(i+1).getY());
                 
             }
+        }
+    }
+    
+    
+        public void consult() {
+        String t1 = "consult('prolog-java.pl')";
+        Query q1 = new Query(t1);
+        
+        
+        if(!q1.hasSolution()){
+            System.out.println("Error: Base de conocimiento no conectada");
+        }else{
+            System.out.println("Base de conocimiento conectada");
+            System.out.println("Consultando...");
+            
+            String t4 = "ir_hacia(gasolineria_uno,hospital_san_rafael)";
+            Query q4 = new Query(t4);
+            java.util.List<String> resultados = new ArrayList<>();
+            
+            System.out.println("Soluciones para  "  + t4 + ":");
+            try {
+                while(q4.hasMoreSolutions()){
+                java.util.Map<String, Term> ht4 = q4.nextSolution();
+                    
+                String wValue = ht4.get("W").toString();
+                    if (wValue != null) {
+                        resultados.add(wValue);
+                    }
+            }
+            } catch (NullPointerException e) {
+                System.err.println(e);
+            }
+            
+            getAllPosition(resultados);
+
+           
+        }
+    }  
+
+    public void getAllPosition(List<String> R) {
+        for (String x : R) {
+            System.out.println(x);
         }
     }
 

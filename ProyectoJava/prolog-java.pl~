@@ -32,40 +32,9 @@ lugar(carrerera_panamericana_central).
 %311 417
 %529 426
 %775 436
-
-
-% COORDENADAS
-% Sintaxis de coordenadas, agregadas como predicados:
-% -> coordenada(lugar, coordenadaX, coordenadaY).
-%
-% Centro de estudio
-coordenada(colegio_santa_cecilia, 546, 296).
-coordenada(itca_fepade, 714, 407).
-coordenada(fesa, 563, 207).
-
-% Centro de Salud
-coordenada(hospital_san_rafael, 775, 436).
-
-% Centro de Gasolinera
-coordenada(gasolineria_uno, 300, 418).
-
-% Centro de parques recreativos
-coordenada(parque_daniel_hernandez, 529, 399).
-coordenada(parque_san_martin, 583, 402).
-coordenada(parque_cafetalon, 640, 326).
-coordenada(parque_la_familia, 647, 183).
-coordenada(estadio_nacional_las_delicias, 273, 416).
-coordenada(parque_ecologico_san_jose, 456, 61).
-
-% Centros de centro comercial
-coordenada(plaza_merliot, 791, 269).
-coordenada(plaza_la_skina, 306, 287).
-coordenada(plaza_las_ramblas,  975, 460).
-
+coordenada(gasolineria_uno,311,417).
 coordenada(carretera_panamericana_central,529,426).
-
-
-
+coordenada(hospital_san_rafael,775,436).
 
 %Funcion que retorna la calle y coordenada
 obtener_coordenada(Lugar, Coor) :-
@@ -76,11 +45,6 @@ obtener_coordenada(Lugar, Coor) :-
 %Direccional
 conecta_con(gasolineria_uno,carretera_panamericana_central).
 conecta_con(carretera_panamericana_central,hospital_san_rafael).
-conecta_con(plaza_merliot,hospital_san_rafael).
-
-% Base de conocimiento y definiciones anteriores
-
-% ...
 
 % Predicado para encontrar una ruta
 % X: Inicio, Y: Destino, R: Ruta
@@ -91,11 +55,10 @@ ir_hacia(X, Y, R) :-
     writeln(R).
 
 % Caso base: se ha llegado al destino
-ir_hacia_rec(X, Y, TempR, R) :-
+ir_hacia_rec(X, Y, R, R) :-
     conecta_con(X, Y),
     writeln(Y),
-    assert(eslabon(Y)),
-    reverse([Y | TempR], R). % Invierte la lista para que quede en orden de inicio a destino
+    assert(eslabon(Y)).
 
 % Caso recursivo: sigue buscando la ruta
 ir_hacia_rec(X, Y, TempR, R) :-

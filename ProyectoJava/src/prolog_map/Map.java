@@ -5,10 +5,17 @@
 package prolog_map;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.*;
+import org.jpl7.*;
+import org.jpl7.JPL;
 import org.jpl7.Query;
 import org.jpl7.Term;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  *
@@ -41,7 +48,7 @@ public class Map extends javax.swing.JFrame {
         @Override
     public void paint(Graphics g){
         
-        consult();
+        consultInfo();
         
         
         Graphics2D g2d = (Graphics2D) g;
@@ -52,15 +59,7 @@ public class Map extends javax.swing.JFrame {
         
         Stroke grosorLinea = new BasicStroke(3.8f); // 
         g2d.setStroke(grosorLinea);
-        g2d.setColor(Color.BLUE);
-        
-        
-        lista.add(new Coordenadas(313,286));
-        lista.add(new Coordenadas(547,297));
-        lista.add(new Coordenadas(640,296));
-        lista.add(new Coordenadas(640,325));
-        
-        
+        g2d.setColor(Color.BLUE);   
         
         for (int i = 0; i < lista.size(); i++) {
             
@@ -78,45 +77,88 @@ public class Map extends javax.swing.JFrame {
     }
     
     
-        public void consult() {
+    public void consultInfo() {
         String t1 = "consult('prolog-java.pl')";
         Query q1 = new Query(t1);
-        
-        
+       
         if(!q1.hasSolution()){
             System.out.println("Error: Base de conocimiento no conectada");
         }else{
             System.out.println("Base de conocimiento conectada");
             System.out.println("Consultando...");
             
-            String t4 = "ir_hacia(gasolineria_uno,hospital_san_rafael)";
+            String t4 = "ir_hacia(" +Inicio +","+ Fin +",W)";
             Query q4 = new Query(t4);
             java.util.List<String> resultados = new ArrayList<>();
             
             System.out.println("Soluciones para  "  + t4 + ":");
             try {
                 while(q4.hasMoreSolutions()){
-                java.util.Map<String, Term> ht4 = q4.nextSolution();
+                    java.util.Map<String, Term> ht4 = q4.nextSolution();
+                    System.out.println(ht4.get("W"));
+                    Term listaProlog = ht4.get("W");
                     
-                String wValue = ht4.get("W").toString();
-                    if (wValue != null) {
-                        resultados.add(wValue);
+                    String value = listaProlog.toString();
+                    // Elimina los corchetes y divide la cadena en elementos separados por comas
+                    String[] elementos = value.substring(1, value.length() - 1).split(",");
+
+                    // Convierte los elementos en una lista
+                    resultados = new ArrayList<>(Arrays.asList(elementos));
+
+                    // Imprime la lista
+                    for (String elemento : resultados) {
+                        System.out.println("Elemento: " + elemento.trim()); // trim() elimina los espacios en blanco alrededor de cada elemento
+                    }        
+                }
+                
+            for (String x : resultados) {
+                System.out.println(1);
+                String t = "obtener_coordenada("+ x +", R)";
+                System.out.println("Soluciones para  "  + t + ":");
+                Query q = new Query(t);
+                
+                
+                try {
+                    while (q.hasMoreSolutions()) {
+                        java.util.Map<String, Term> ht = q.nextSolution();
+                        String rValue = ht.get("R").toString();
+                        System.out.println(rValue);
+                        
+                        Pattern pattern = Pattern.compile("\\d+");
+                        Matcher matcher = pattern.matcher(rValue);
+                        
+                        int numero1 = 0;
+                        int numero2 = 0;
+                        int contador = 0;
+                        
+                        while (matcher.find()) {
+                            if (contador == 0) {
+                                numero1 = java.lang.Integer.parseInt(matcher.group());
+                            } else if (contador == 1) {
+                                numero2 = java.lang.Integer.parseInt(matcher.group());
+                            }
+                            contador++;
+                        }
+                        
+                        lista.add(new Coordenadas(numero1,numero2));
+                       
                     }
-            }
+
+                } catch (NullPointerException e) {
+                    System.err.println(e);
+                }
+            }    
+                
+                
             } catch (NullPointerException e) {
                 System.err.println(e);
             }
             
-            getAllPosition(resultados);
-
-           
         }
     }  
 
     public void getAllPosition(List<String> R) {
-        for (String x : R) {
-            System.out.println(x);
-        }
+
     }
 
     /**

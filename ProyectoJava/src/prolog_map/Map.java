@@ -68,6 +68,9 @@ public class Map extends javax.swing.JFrame {
             }
             
             if(i != lista.size() - 1){
+                System.out.println(lista.get(i).getX() + "," +  lista.get(i).getY()) ;
+                
+                System.out.println(lista.get(i+1).getX() + "," + lista.get(i+1).getY()) ;
                 
                 g2d.drawLine(lista.get(i).getX(),lista.get(i).getY() , 
                              lista.get(   i+1).getX(),lista.get(i+1).getY());
@@ -112,7 +115,6 @@ public class Map extends javax.swing.JFrame {
                 }
                 
             for (String x : resultados) {
-                System.out.println(1);
                 String t = "obtener_coordenada("+ x +", R)";
                 System.out.println("Soluciones para  "  + t + ":");
                 Query q = new Query(t);

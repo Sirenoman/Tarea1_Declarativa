@@ -28,6 +28,12 @@ lugar(plaza_las_ramblas).
 lugar(ccCarretera_panamericana).
 lugar(carrerera_panamericana_central).
 
+%prueba
+lugar(puntoUno).
+lugar(puntoDos).
+lugar(puntoTres).
+lugar(puntoCuatro).
+
 %Coordenadas
 %311 417
 %529 426
@@ -61,9 +67,13 @@ coordenada(parque_ecologico_san_jose, 456, 61).
 coordenada(plaza_merliot, 791, 269).
 coordenada(plaza_la_skina, 306, 287).
 coordenada(plaza_las_ramblas,  975, 460).
-
 coordenada(carretera_panamericana_central,529,426).
 
+coordenada(puntoUno
+,775,415).
+coordenada(puntoDos,745,410).
+coordenada(puntoTres,713,408).
+coordenada(puntoCuatro,713,434).
 
 
 
@@ -76,7 +86,19 @@ obtener_coordenada(Lugar, Coor) :-
 %Direccional
 conecta_con(gasolineria_uno,carretera_panamericana_central).
 conecta_con(carretera_panamericana_central,hospital_san_rafael).
-conecta_con(plaza_merliot,hospital_san_rafael).
+%conecta_con(plaza_merliot,hospital_san_rafael).
+
+%pruebas
+
+
+conecta_con(plaza_merliot, puntoUno
+).
+conecta_con(puntoUno
+, puntoDos).
+conecta_con(puntoDos, puntoTres).
+conecta_con(puntoTres, puntoCuatro).
+conecta_con(puntoCuatro, hospital_san_rafael).
+
 
 % Base de conocimiento y definiciones anteriores
 

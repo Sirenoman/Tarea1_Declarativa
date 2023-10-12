@@ -28,11 +28,13 @@ lugar(plaza_las_ramblas).
 lugar(ccCarretera_panamericana).
 lugar(carrerera_panamericana_central).
 
-%prueba
-lugar(puntoUno).
-lugar(puntoDos).
-lugar(puntoTres).
-lugar(puntoCuatro).
+%prueba de intersecciones
+lugar(cccarrerera_panamericana_central).
+lugar(ccpuntoUno).
+lugar(ccpuntoDos).
+lugar(ccpuntoTres).
+lugar(ccpuntoCuatro).
+lugar(ccpuntoPDaniel).
 
 %Coordenadas
 %311 417
@@ -56,7 +58,7 @@ coordenada(hospital_san_rafael, 775, 436).
 coordenada(gasolineria_uno, 300, 418).
 
 % Centro de parques recreativos
-coordenada(parque_daniel_hernandez, 529, 399).
+coordenada(parque_daniel_hernandez, 532, 399).
 coordenada(parque_san_martin, 583, 402).
 coordenada(parque_cafetalon, 640, 326).
 coordenada(parque_la_familia, 647, 183).
@@ -69,11 +71,12 @@ coordenada(plaza_la_skina, 306, 287).
 coordenada(plaza_las_ramblas,  975, 460).
 coordenada(carretera_panamericana_central,529,426).
 
-coordenada(puntoUno
-,775,415).
-coordenada(puntoDos,745,410).
-coordenada(puntoTres,713,408).
-coordenada(puntoCuatro,713,434).
+%Puntos de interseccion
+coordenada(ccpuntoPDaniel,556,400).
+coordenada(ccpuntoUno,775,415).
+coordenada(ccpuntoDos,745,410).
+coordenada(ccpuntoTres,713,408).
+coordenada(ccpuntoCuatro,713,434).
 
 
 
@@ -84,7 +87,6 @@ obtener_coordenada(Lugar, Coor) :-
 
 %Conexiones de las coordenadas
 %Direccional
-conecta_con(gasolineria_uno,carretera_panamericana_central).
 conecta_con(carretera_panamericana_central,hospital_san_rafael).
 %conecta_con(plaza_merliot,hospital_san_rafael).
 
@@ -93,11 +95,15 @@ conecta_con(carretera_panamericana_central,hospital_san_rafael).
 
 conecta_con(plaza_merliot, puntoUno
 ).
-conecta_con(puntoUno
-, puntoDos).
-conecta_con(puntoDos, puntoTres).
-conecta_con(puntoTres, puntoCuatro).
-conecta_con(puntoCuatro, hospital_san_rafael).
+conecta_con(ccpuntoUno, ccpuntoDos).
+conecta_con(ccpuntoDos, ccpuntoTres).
+conecta_con(ccpuntoTres, ccpuntoCuatro).
+conecta_con(ccpuntoCuatro, hospital_san_rafael).
+
+%Conexiones de Gasolineria
+conecta_con(gasolineria_uno,carretera_panamericana_central).
+conecta_con(carretera_panamericana_central, parque_daniel_hernandez).
+%conecta_con(plaza_merliot,hospital_san_rafael).
 
 
 % Base de conocimiento y definiciones anteriores

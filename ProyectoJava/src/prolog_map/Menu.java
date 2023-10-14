@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package prolog_map;
 
 import java.awt.List;
@@ -14,10 +11,6 @@ import javax.swing.SwingUtilities;
 import org.jpl7.Query;
 import org.jpl7.Term;
 
-/**
- *
- * @author karli
- */
 public class Menu extends javax.swing.JFrame {
 
     /**

@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package prolog_map;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,11 +14,6 @@ import org.jpl7.Term;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
-/**
- *
- * @author karli
- */
 public class Map extends javax.swing.JFrame {
     
     private String Inicio = "";
@@ -46,35 +39,35 @@ public class Map extends javax.swing.JFrame {
     }
     
         @Override
-    public void paint(Graphics g){
-        
+    public void paint(Graphics g) {
+
         consultInfo();
-        
-        
+
         Graphics2D g2d = (Graphics2D) g;
         Image fondo = new ImageIcon(getClass().getResource("/image/Mapa_SantaTecla3.png")).getImage();
-        
+
         g2d.drawImage(fondo, 0, 0, this); // 0, 0 indica la posición inicial de la imagen
-        
-        
+
         Stroke grosorLinea = new BasicStroke(3.8f); // 
         g2d.setStroke(grosorLinea);
-        g2d.setColor(Color.BLUE);   
-        
+        g2d.setColor(Color.BLUE);
+
         for (int i = 0; i < lista.size(); i++) {
-            
-            if(i == 0){
-                g2d.fillOval(lista.get(i).getX() - 5,lista.get(i).getY() - 5, 15, 15);
+
+            if (i != lista.size() - 1) {
+                g2d.setColor(Color.BLUE);
+                System.out.println(lista.get(i).getX() + "," + lista.get(i).getY());
+
+                System.out.println(lista.get(i + 1).getX() + "," + lista.get(i + 1).getY());
+
+                g2d.drawLine(lista.get(i).getX(), lista.get(i).getY(),
+                        lista.get(i + 1).getX(), lista.get(i + 1).getY());
+
             }
-            
-            if(i != lista.size() - 1){
-                System.out.println(lista.get(i).getX() + "," +  lista.get(i).getY()) ;
-                
-                System.out.println(lista.get(i+1).getX() + "," + lista.get(i+1).getY()) ;
-                
-                g2d.drawLine(lista.get(i).getX(),lista.get(i).getY() , 
-                             lista.get(   i+1).getX(),lista.get(i+1).getY());
-                
+
+            if (i == 0) {
+                g2d.setColor(Color.BLUE);
+                g2d.fillOval(lista.get(i).getX() - 5, lista.get(i).getY() - 5, 15, 15);
             }
         }
         lista.clear();

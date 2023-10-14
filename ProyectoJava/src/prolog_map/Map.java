@@ -77,6 +77,7 @@ public class Map extends javax.swing.JFrame {
                 
             }
         }
+        lista.clear();
     }
     
     
